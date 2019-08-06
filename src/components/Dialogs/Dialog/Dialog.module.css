@@ -1,0 +1,8 @@
+.dialog {
+    color: white;
+    text-decoration: none;
+}
+
+.dialog.active{
+    color: gold;
+}
