@@ -8,16 +8,15 @@ import Navigation from './components/Navigation/Navigation';
 import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 
-function App() {
+function App(props) {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navigation/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' component={Dialogs}/>
-                    {/*<Route path='/dialog/1' component={}/>*/}
-                    <Route path='/profile' component={Profile}/>
+                    <Route path='/dialogs' render={() => {return <Dialogs dataUsers={props.dataUsers} dataMessages={props.dataMessages}/>}}/>
+                    <Route path='/profile' render={() => {return <Profile />}}/>
                 </div>
             </div>
         </BrowserRouter>
