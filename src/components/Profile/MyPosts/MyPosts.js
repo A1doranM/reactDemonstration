@@ -4,16 +4,21 @@ import styleFor from './MyPosts.module.css';
 import Post from '../MyPosts/Post/Post';
 
 const MyPosts = (props) => {
+
+    let newPost = React.createRef();
+
+    let addPost = () => {
+      let text = newPost.current.value;
+    };
+
     return (
         <div className={styleFor.postsBlock}> <h2>My posts</h2>
             <div>
                 <div>
-                    <textarea>
-                        Write post text
-                    </textarea>
+                    <textarea ref={newPost}></textarea>
                 </div>
                 <div>
-                    <button>
+                    <button onClick={addPost}>
                         Add post
                     </button>
                 </div>
