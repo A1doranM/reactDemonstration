@@ -15,8 +15,14 @@ function App(props) {
                 <Header/>
                 <Navigation/>
                 <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => {return <Dialogs dialogs={props.appState.dialogs}/>}}/>
-                    <Route path='/profile' render={() => {return <Profile />}}/>
+                    <Route path='/dialogs' render={() => {
+                        return <Dialogs dialogs={props.appState.dialogsPage}
+                                        addMessage={props.addMessage}/>
+                    }}/>
+                    <Route path='/profile' render={() => {
+                        return <Profile profileData={props.appState.profilePage}
+                                        addPost={props.addPost}/>
+                    }}/>
                 </div>
             </div>
         </BrowserRouter>

@@ -9,7 +9,12 @@ const MyPosts = (props) => {
 
     let addPost = () => {
       let text = newPost.current.value;
+      props.addPost(text);
     };
+
+    let postsElems = props.posts.postsData.map((post) => {
+        return <Post message={post.text}/>
+    });
 
     return (
         <div className={styleFor.postsBlock}> <h2>My posts</h2>
@@ -24,8 +29,7 @@ const MyPosts = (props) => {
                 </div>
             </div>
             <div className={styleFor.posts}>
-                <Post message='Hi people'/>
-                <Post message='Hi, this is my first post!'/>
+                {postsElems}
             </div>
         </div>
     )
