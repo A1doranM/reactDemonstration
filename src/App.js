@@ -16,12 +16,13 @@ function App(props) {
                 <Navigation/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs' render={() => {
-                        return <Dialogs dialogs={props.appState.dialogsPage}
+                        return <Dialogs dialogs={props.appState.getState.dialogsPage}
                                         addMessage={props.addMessage}/>
                     }}/>
                     <Route path='/profile' render={() => {
                         return <Profile profileData={props.appState.profilePage}
-                                        addPost={props.addPost}/>
+                                        addPost={props.addPost}
+                                        changeNewPostText={props.changeNewPostText}/>
                     }}/>
                 </div>
             </div>

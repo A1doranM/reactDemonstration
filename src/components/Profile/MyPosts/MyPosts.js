@@ -8,8 +8,14 @@ const MyPosts = (props) => {
     let newPost = React.createRef();
 
     let addPost = () => {
-      let text = newPost.current.value;
-      props.addPost(text);
+        let text = newPost.current.value;
+        props.addPost(text);
+        props.changeNewPostText('');
+    };
+
+    let changeNewPostText = (newText) =>{
+        let text = newPost.current.value;
+        props.changeNewPostText(text);
     };
 
     let postsElems = props.posts.postsData.map((post) => {
@@ -17,10 +23,12 @@ const MyPosts = (props) => {
     });
 
     return (
-        <div className={styleFor.postsBlock}> <h2>My posts</h2>
+        <div className={styleFor.postsBlock}><h2>My posts</h2>
             <div>
                 <div>
-                    <textarea ref={newPost}></textarea>
+                    <textarea onChange={changeNewPostText}
+                              ref={newPost}
+                              value={props.posts.newPostText.text}/>
                 </div>
                 <div>
                     <button onClick={addPost}>
