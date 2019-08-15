@@ -6,11 +6,11 @@ import Message from "./Messages/Message";
 import {addMessageActionCreator, updateMessageTextActionCreator} from "../../redux/dialogsReducer";
 
 const Dialogs = (props) => {
-    let dialogElems = props.dialogs.dataUsers.map((dialog) => {
+    let dialogElems = props.dialogs.map((dialog) => {
         return <Dialog name={dialog.name} id={dialog.id}/>
     });
 
-    let messagesElems = props.dialogs.dataMessages.map((message, index) => {
+    let messagesElems = props.dialogs.map((message, index) => {
         return <Message key={index} message={message.message}/>
     });
 

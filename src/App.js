@@ -9,7 +9,6 @@ import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 
 function App(props) {
-debugger;
     return (
         <div className="app-wrapper">
             <Header/>
@@ -21,7 +20,7 @@ debugger;
                     />
                 }}/>
                 <Route path='/profile' render={() => {
-                    return <Profile profileData={props.state.dialogsPage}
+                    return <Profile profilePage={props.state.profilePage}
                                     dispatch={props.dispatch}/>
                 }}/>
             </div>

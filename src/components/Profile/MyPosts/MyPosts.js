@@ -16,7 +16,7 @@ const MyPosts = (props) => {
         props.dispatch(action);
     };
 
-    let postsElems = props.posts.postsData.map((post) => {
+    let postsElems = props.posts.map((post) => {
         return <Post message={post.text}/>
     });
 
@@ -25,7 +25,7 @@ const MyPosts = (props) => {
             <div>
                 <div>
                     <textarea onChange={changeNewPostText}
-                              value={props.posts.newPostText.text}/>
+                              value={props.newPostText.text}/>
                 </div>
                 <div>
                     <button onClick={addPost}>
