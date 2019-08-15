@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
 
 import './App.css';
 
@@ -9,24 +9,23 @@ import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 
 function App(props) {
+debugger;
     return (
-        <BrowserRouter>
-            <div className="app-wrapper">
-                <Header/>
-                <Navigation/>
-                <div className='app-wrapper-content'>
-                    <Route path='/dialogs' render={() => {
-                        return <Dialogs dialogs={props.appState.getState.dialogsPage}
-                                        addMessage={props.addMessage}/>
-                    }}/>
-                    <Route path='/profile' render={() => {
-                        return <Profile profileData={props.appState.profilePage}
-                                        addPost={props.addPost}
-                                        changeNewPostText={props.changeNewPostText}/>
-                    }}/>
-                </div>
+        <div className="app-wrapper">
+            <Header/>
+            <Navigation/>
+            <div className='app-wrapper-content'>
+                <Route path='/dialogs' render={() => {
+                    return <Dialogs dialogs={props.state.dialogsPage}
+                                    dispatch={props.dispatch}
+                    />
+                }}/>
+                <Route path='/profile' render={() => {
+                    return <Profile profileData={props.state.dialogsPage}
+                                    dispatch={props.dispatch}/>
+                }}/>
             </div>
-        </BrowserRouter>
+        </div>
     );
 }
 

@@ -1,3 +1,7 @@
+import {profileReducer} from "./profileReducer";
+import {dialogsReducer} from "./dialogsReducer";
+import {sidebarReducer} from "./sidebarReducer";
+
 let store = {
     _state: {
         dialogsPage: {
@@ -11,48 +15,34 @@ let store = {
                 {id: 1, message: 'Hi Max'},
                 {id: 2, message: 'Hi Daria'},
                 {id: 3, message: 'Hi Alex'},
-                {id: 4, message: 'Hi Dimas'},
-                {id: 4, message: 'Hi Dimas'},
-                {id: 4, message: 'Hi Dimas'},
-                {id: 4, message: 'Hi Dimas'},
             ],
+            newMessageText: {
+                text: 'Write you message!'
+            },
         },
         profilePage: {
             postsData: [
-                {text: 'First post'},
-                {text: 'Second post'},
-                {text: 'Third post'},
-                {text: 'Fourth post'},
+                {id: 1, text: 'First post'},
+                {id: 2, text: 'Second post'},
+                {id: 3, text: 'Third post'},
+                {id: 4, text: 'Fourth post'},
             ],
             newPostText: {
-                text: 'write you post'
+                text: 'Write you post!'
             },
         },
+        sidebar: {},
     },
 
     _callSubscriber(){},
 
-    addPost(postText){
+    dispatch(action){
 
-        let newPost = {
-            text: postText,
-        };
-        this._state.profilePage.postsData.push(newPost);
-        this._callSubscriber();
-    },
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
 
-    addMessage(message){
-        let newMessage = {
-            id: 5,
-            message: message.text,
-        };
-        this._state.dialogsPage.dataMessages.push(newMessage);
-        this._callSubscriber();
-    },
-
-    changeNewPostText(newText){
-        this._state.profilePage.newPostText.text = newText;
-        this._callSubscriber();
+        this._callSubscriber(this._state);
     },
 
     subscribe(observer){
