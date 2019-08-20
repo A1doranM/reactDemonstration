@@ -3,26 +3,23 @@ import styleFor from './Dialogs.module.css';
 
 import Dialog from "./Dialog/Dialog";
 import Message from "./Messages/Message";
-import {addMessageActionCreator, updateMessageTextActionCreator} from "../../redux/dialogsReducer";
 
 const Dialogs = (props) => {
-    let dialogElems = props.dialogs.map((dialog) => {
+    let dialogElems = props.dialogsPage.dataUsers.map((dialog) => {
         return <Dialog name={dialog.name} id={dialog.id}/>
     });
 
-    let messagesElems = props.dialogs.map((message, index) => {
+    let messagesElems = props.dialogsPage.dataMessages.map((message, index) => {
         return <Message key={index} message={message.message}/>
     });
 
     let newMessage = () => {
-        let action = addMessageActionCreator();
-        props.dispatch(action);
+        props.newMessage();
     };
 
     let changeMessageText = (e) =>{
         let text = e.target.value;
-        let action = updateMessageTextActionCreator(text);
-        props.dispatch(action);
+        props.changeMessageText(text);
     };
 
     return (
@@ -33,7 +30,7 @@ const Dialogs = (props) => {
             <div className={styleFor.messages}>
                 <div>
                     <textarea onChange={changeMessageText}
-                              value={props.dialogs.newMessageText.text}/>
+                              value={props.dialogsPage.newMessageText.text}/>
 
                     <button onClick={newMessage}>
                         send

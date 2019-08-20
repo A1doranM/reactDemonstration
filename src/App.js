@@ -6,7 +6,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Navigation from './components/Navigation/Navigation';
 import Profile from './components/Profile/Profile';
-import Dialogs from './components/Dialogs/Dialogs';
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 function App(props) {
     return (
@@ -15,13 +15,10 @@ function App(props) {
             <Navigation/>
             <div className='app-wrapper-content'>
                 <Route path='/dialogs' render={() => {
-                    return <Dialogs dialogs={props.state.dialogsPage}
-                                    dispatch={props.dispatch}
-                    />
+                    return <DialogsContainer />
                 }}/>
                 <Route path='/profile' render={() => {
-                    return <Profile profilePage={props.state.profilePage}
-                                    dispatch={props.dispatch}/>
+                    return <Profile />
                 }}/>
             </div>
         </div>

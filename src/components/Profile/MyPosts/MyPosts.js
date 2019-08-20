@@ -2,18 +2,15 @@ import React from 'react';
 import styleFor from './MyPosts.module.css';
 
 import Post from '../MyPosts/Post/Post';
-import {addPostActionCreator, updatePostTextActionCreator} from "../../../redux/profileReducer";
 
 const MyPosts = (props) => {
     let addPost = () => {
-        let action = addPostActionCreator();
-        props.dispatch(action);
+        props.addPost();
     };
 
-    let changeNewPostText = (e) =>{
+    let updatePostText = (e) =>{
         let text = e.target.value;
-        let action = updatePostTextActionCreator(text);
-        props.dispatch(action);
+        props.updatePostText(text);
     };
 
     let postsElems = props.posts.map((post) => {
@@ -24,7 +21,7 @@ const MyPosts = (props) => {
         <div className={styleFor.postsBlock}><h2>My posts</h2>
             <div>
                 <div>
-                    <textarea onChange={changeNewPostText}
+                    <textarea onChange={updatePostText}
                               value={props.newPostText.text}/>
                 </div>
                 <div>
