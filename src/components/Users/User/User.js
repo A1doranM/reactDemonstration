@@ -2,16 +2,25 @@ import React from 'react';
 import styleFor from "../User.module.css";
 
 let User = (props) =>{
+
+    // let follow = () =>{
+    //     props.follow(props.id);
+    // };
+    //
+    // let unfollow = () =>{
+    //     props.unfollow(props.id);
+    // };
+
     return(
-        <div key={props.key}>
+        <div key={props.user.id}>
                 <span>
                     <div>
-                        <img src={props.user.photo} className={styleFor.userPhoto} alt='user photo'/>
+                        <img src={props.user.photo} className={styleFor.userPhoto} alt=''/>
                     </div>
                     <div>
-                        {props.follow
-                            ? <button onClick={props.follow(props.key)}>Unfollow</button>
-                            : <button onClick={props.unfollow(props.key)}>Follow</button>}
+                        {props.user.followed
+                            ? <button onClick={() => {props.follow(props.user.id)}}>Unfollow</button>
+                            : <button onClick={() => {props.unfollow(props.user.id)}}>Follow</button>}
                     </div>
                 </span>
                 <span>

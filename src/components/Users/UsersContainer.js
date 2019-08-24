@@ -12,6 +12,7 @@ let mapDispatchToProps = (dispatch) =>{
     return {
         follow: (userID) => {
             dispatch(followActionCreator(userID));
+            debugger;
         },
         unfollow: (userID) => {
             dispatch(unfollowActionCreator(userID));
