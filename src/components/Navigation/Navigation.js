@@ -12,6 +12,9 @@ const Navigation = (props) => {
                 <NavLink to="/dialogs" activeClassName={styleFor.active}>Dialogs</NavLink>
             </div>
             <div className={styleFor.navItem}>
+                <NavLink to="/users" activeClassName={styleFor.active}>Users</NavLink>
+            </div>
+            <div className={styleFor.navItem}>
                 <NavLink to="/news" activeClassName={styleFor.active}>News</NavLink>
             </div>
             <div className={styleFor.navItem}>

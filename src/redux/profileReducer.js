@@ -3,10 +3,10 @@ const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 
 let initialState = {
     postsData: [
-        {id: 1, text: 'First post'},
-        {id: 2, text: 'Second post'},
-        {id: 3, text: 'Third post'},
-        {id: 4, text: 'Fourth post'},
+        {id: Math.floor(Math.random() * 1000000), text: 'First post'},
+        {id: Math.floor(Math.random() * 1000000), text: 'Second post'},
+        {id: Math.floor(Math.random() * 1000000), text: 'Third post'},
+        {id: Math.floor(Math.random() * 1000000), text: 'Fourth post'},
     ],
     newPostText: {
         text: 'Write you post!'
@@ -14,22 +14,28 @@ let initialState = {
 };
 
 export const profileReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
                 id: 5,
                 text: state.newPostText.text,
             };
-            let stateCopy = {...state};
-            stateCopy.postsData = Array.from(state.postsData);
-            stateCopy.postsData.push(newPost);
-            stateCopy.newPostText.text = '';
-            return stateCopy;
+            return {
+                ...state,
+                postsData: [...state.postsData, newPost],
+                newPostText: {
+                    text: '',
+                }
+            };
         }
         case UPDATE_POST_TEXT: {
-            let stateCopy = {...state};
-            state.newPostText.text = action.text;
-            return stateCopy;
+            return {
+                ...state,
+                newPostText: {
+                    text: action.data,
+                },
+            };
         }
         default:
             return state;
