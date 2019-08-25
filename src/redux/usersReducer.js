@@ -3,12 +3,14 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const SET_FETCHING = 'SET_FETCHING';
 
 let initialState = {
     usersData: [],
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 5,
+    isFetching: true,
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -55,6 +57,11 @@ export const usersReducer = (state = initialState, action) => {
                 ...state,
                 totalUsersCount: action.totalUsersCount,
             };
+        case SET_FETCHING:
+            return{
+                ...state,
+                isFetching: action.fetchingValue,
+            };
         default:
             return state;
     }
@@ -92,5 +99,12 @@ export const setUsersTotalCountActionCreator = (usersCount) => {
     return {
         type: SET_TOTAL_USERS_COUNT,
         totalUsersCount: usersCount,
+    }
+};
+
+export const setFetchingActionCreator = (fetchingValue) => {
+    return {
+        type: SET_FETCHING,
+        fetchingValue: fetchingValue,
     }
 };
