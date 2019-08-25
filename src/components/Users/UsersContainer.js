@@ -5,33 +5,29 @@ import {
     setUserActionCreator, setUsersTotalCountActionCreator,
     unfollowActionCreator
 } from "../../redux/usersReducer";
-import * as axios from "axios/index";
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {usersAPI} from "../API/API";
 
 class UsersAPIComponent extends React.Component {
 
     componentDidMount() {
         this.props.setFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=
-        ${this.props.currentPage}
-        &count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
-                this.props.setFetching(false);
-            });
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+            this.props.setUsers(data.items);
+            this.props.setTotalUsersCount(data.totalCount);
+            this.props.setFetching(false);
+        });
     };
 
     onPageChanged = (pageNumber) => {
         this.props.setFetching(true);
         this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=
-        ${pageNumber}
-        &count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items);
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items);
                 this.props.setFetching(false);
             });
     };
@@ -60,17 +56,6 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-    }
-};
-
-let mapDispatchToProps = (dispatch) => {
-    return {
-        follow: followActionCreator,
-        unfollow: unfollowActionCreator,
-        setUsers: setUserActionCreator,
-        setCurrentPage: setCurrentPageActionCreator,
-        setTotalUsersCount: setUsersTotalCountActionCreator,
-        setFetching: setFetchingActionCreator,
     }
 };
 

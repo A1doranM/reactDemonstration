@@ -14,7 +14,7 @@ const MyPosts = (props) => {
     };
 
     let postsElems = props.posts.map((post) => {
-        return <Post message={post.text}/>
+        return <Post key={post.id} message={post.text}/>
     });
 
     return (

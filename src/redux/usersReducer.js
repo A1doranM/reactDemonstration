@@ -19,7 +19,6 @@ export const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 usersData: state.usersData.map((u) => {
-                    debugger;
                     if (u.id === action.userID) {
                         return {
                             ...u,
