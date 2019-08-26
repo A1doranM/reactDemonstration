@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {
-    followActionCreator,
+    followActionCreator, followingInProgressActionCreator,
     setCurrentPageActionCreator, setFetchingActionCreator,
     setUserActionCreator, setUsersTotalCountActionCreator,
     unfollowActionCreator
@@ -43,6 +43,8 @@ class UsersAPIComponent extends React.Component {
                        totalUsersCount={this.props.totalUsersCount}
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}
+                       setFollowingInProgress={this.props.setFollowingInProgress}
+                       followingInProgress={this.props.followingInProgress}
                 />
             </>
         )
@@ -56,6 +58,7 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress,
     }
 };
 
@@ -66,6 +69,7 @@ const UsersContainer = connect(mapStateToProps, {
     setCurrentPage: setCurrentPageActionCreator,
     setTotalUsersCount: setUsersTotalCountActionCreator,
     setFetching: setFetchingActionCreator,
+    setFollowingInProgress: followingInProgressActionCreator,
 })(UsersAPIComponent);
 
 export default UsersContainer;
