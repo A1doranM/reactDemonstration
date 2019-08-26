@@ -1,3 +1,5 @@
+import {authAPI} from "../components/API/API";
+
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_FETCHING = 'SET_FETCHING';
 
@@ -18,7 +20,7 @@ export const authReducer = (state = initialState, action) => {
                 isAuth: true,
             };
         case SET_FETCHING:
-            return{
+            return {
                 ...state,
                 isFetching: action.fetchingValue,
             };
@@ -38,5 +40,17 @@ export const setFetchingActionCreator = (fetchingValue) => {
     return {
         type: SET_FETCHING,
         fetchingValue: fetchingValue,
+    }
+};
+
+export const getAuthUserDataThunkCreator = () => {
+    return (dispatch) => {
+        authAPI.me()
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    let {id, email, login} = response.data.data;
+                    dispatch(setUserDataActionCreator(id, email, login));
+                }
+            });
     }
 };

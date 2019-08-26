@@ -3,6 +3,7 @@ import styleFor from './Dialogs.module.css';
 
 import Dialog from "./Dialog/Dialog";
 import Message from "./Messages/Message";
+import {Redirect} from "react-router-dom";
 
 const Dialogs = (props) => {
     let dialogElems = props.dialogsPage.dataUsers.map((dialog) => {
@@ -21,6 +22,10 @@ const Dialogs = (props) => {
         let text = e.target.value;
         props.changeMessageText(text);
     };
+
+    if(!props.isAuth){
+       return <Redirect to={'/login'}/>
+    }
 
     return (
         <div className={styleFor.dialogs}>

@@ -15,13 +15,25 @@ export const usersAPI = {
                 return response.data;
             });
     },
-    userFollow(currentPage = 1, pageSize = 5) {
-
-    },
-    userUnfollow(currentPage = 1, pageSize = 5) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+    userUnfollow(userID = 1) {
+        return instance.delete(`follow/${userID}`)
             .then(response => {
                 return response.data;
-            });
+            })
+    },
+    userFollow(userID = 1) {
+        return instance.post(`follow/${userID}`, null)
+            .then(response => {
+                return response.data;
+            })
+    },
+    getProfile(userID){
+        return instance.get(`/profile/` + userID);
+    },
+};
+
+export const authAPI = {
+    me() {
+        return instance.get(`/auth/me`)
     }
 };

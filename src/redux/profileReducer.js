@@ -1,3 +1,5 @@
+import {usersAPI} from "../components/API/API";
+
 const ADD_POST = 'ADD_POST';
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -68,4 +70,13 @@ export const setUserProfileActionCreator = (profile) => {
         type: SET_USER_PROFILE,
         profile,
     }
+};
+
+export const getUserProfileThunkCreator = (userID) => {
+    return (dispatch) => {
+        usersAPI.getProfile(userID)
+            .then(response => {
+                dispatch(setUserProfileActionCreator(response.data));
+            });
+    };
 };
