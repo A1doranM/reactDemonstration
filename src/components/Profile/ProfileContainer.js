@@ -3,27 +3,26 @@ import {connect} from "react-redux";
 
 import Profile from "./Profile";
 import {
-    getUserProfileThunkCreator,
+    getUserProfileThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator,
 } from "../../redux/profileReducer";
 import {withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 
 
 class ProfileContainer extends React.Component {
 
-    componentDidMount(){
+    componentDidMount() {
         let userID = this.props.match.params.userID;
-
-        if(!userID){
-            userID = 2;
-        }
         this.props.getUserProfileThunkCreator(userID);
+        this.props.getUserStatusThunkCreator(userID);
     };
 
     render() {
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props}
+                     profile={this.props.profile}
+                     status={this.props.status}
+                     updateStatus={this.props.updateUserStatusThunkCreator}/>
         )
     }
 }
@@ -31,15 +30,15 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status,
     }
 };
 
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
-
-let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);
-
 export default compose(
-    withAuthRedirect,
     withRouter,
-    connect(mapStateToProps, {getUserProfileThunkCreator: getUserProfileThunkCreator}),
+    connect(mapStateToProps, {
+        getUserProfileThunkCreator: getUserProfileThunkCreator,
+        getUserStatusThunkCreator: getUserStatusThunkCreator,
+        updateUserStatusThunkCreator: updateUserStatusThunkCreator,
+    }),
 )(ProfileContainer);

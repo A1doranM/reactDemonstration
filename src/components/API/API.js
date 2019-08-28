@@ -15,7 +15,7 @@ export const usersAPI = {
                 return response.data;
             });
     },
-    userUnfollow(userID = 1) {
+    userUnfollow(userID) {
         return instance.delete(`follow/${userID}`)
             .then(response => {
                 return response.data;
@@ -28,7 +28,20 @@ export const usersAPI = {
             })
     },
     getProfile(userID){
-        return instance.get(`/profile/` + userID);
+        console.warn('Deprecated. Use profileAPI.getProfile');
+        return profileAPI.getProfile(userID);
+    },
+};
+
+export const profileAPI = {
+    getProfile(userID){
+        return instance.get(`profile/` + userID);
+    },
+    getStatus(userID){
+        return instance.get(`profile/status/` + userID);
+    },
+    updateStatus(status){
+        return instance.put(`profile/status`, {status: status});
     },
 };
 

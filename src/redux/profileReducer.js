@@ -1,8 +1,9 @@
-import {usersAPI} from "../components/API/API";
+import {profileAPI} from "../components/API/API";
 
 const ADD_POST = 'ADD_POST';
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_STATUS = 'SET_USER_STATUS';
 
 let initialState = {
     postsData: [
@@ -15,6 +16,7 @@ let initialState = {
         text: 'Write you post!'
     },
     profile: null,
+    status: '',
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -47,6 +49,12 @@ export const profileReducer = (state = initialState, action) => {
                 profile: action.profile,
             }
         }
+        case SET_USER_STATUS: {
+            return{
+                ...state,
+                status: action.status,
+            }
+        }
         default:
             return state;
     }
@@ -68,15 +76,42 @@ export const updatePostTextActionCreator = (text) => {
 export const setUserProfileActionCreator = (profile) => {
     return {
         type: SET_USER_PROFILE,
-        profile,
+        profile: profile,
+    }
+};
+
+export const setUserStatusActionCreator = (status) => {
+    return {
+        type: SET_USER_STATUS,
+        status: status,
     }
 };
 
 export const getUserProfileThunkCreator = (userID) => {
     return (dispatch) => {
-        usersAPI.getProfile(userID)
+        profileAPI.getProfile(userID)
             .then(response => {
                 dispatch(setUserProfileActionCreator(response.data));
+            });
+    };
+};
+
+export const getUserStatusThunkCreator = (userID) => {
+    return (dispatch) => {
+        profileAPI.getStatus(userID)
+            .then(response => {
+                dispatch(setUserStatusActionCreator(response.data));
+            });
+    };
+};
+
+export const updateUserStatusThunkCreator = (userID) => {
+    return (dispatch) => {
+        profileAPI.updateStatus(userID)
+            .then(response => {
+                if(response.data.resultCode === 0) {
+                    dispatch(setUserStatusActionCreator(response.data));
+                }
             });
     };
 };
