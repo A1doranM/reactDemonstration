@@ -4,21 +4,22 @@ import Preloader from "../../common/Preloader/Preloader";
 import Status from "../Status/Status";
 
 const ProfileInfo = (props) => {
-    if(!props.profile){
-        return <Preloader />
+    if (!props.profile) {
+        return <Preloader/>
     }
 
     return (
         <div className={styleFor.profileInfo}>
             {/*<div className={styleFor.image}>*/}
-                {/*<img src='https://i.redd.it/ihoxdlxnodpy.jpg' alt={''}/>*/}
+            {/*<img src='https://i.redd.it/ihoxdlxnodpy.jpg' alt={''}/>*/}
             {/*</div>*/}
             <div className={styleFor.description}>
                 <img src={props.profile.photos.small} alt={''}/>
                 <div>{props.profile.aboutMe}</div>
             </div>
             <div>
-                <Status status={props.status}/>
+                <Status status={props.status}
+                        updateStatus={props.updateStatus}/>
             </div>
         </div>
     )

@@ -32,7 +32,11 @@ export const authReducer = (state = initialState, action) => {
 export const setUserDataActionCreator = (userID, email, login) => {
     return {
         type: SET_USER_DATA,
-        data: {userID, email, login},
+        data: {
+            userID: userID,
+            email: email,
+            login: login
+        },
     }
 };
 

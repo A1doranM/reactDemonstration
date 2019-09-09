@@ -105,9 +105,9 @@ export const getUserStatusThunkCreator = (userID) => {
     };
 };
 
-export const updateUserStatusThunkCreator = (userID) => {
+export const updateUserStatusThunkCreator = (status) => {
     return (dispatch) => {
-        profileAPI.updateStatus(userID)
+        profileAPI.updateStatus(status)
             .then(response => {
                 if(response.data.resultCode === 0) {
                     dispatch(setUserStatusActionCreator(response.data));

@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 
 let Users = (props) => {
     let pages = [];
-    for (let i = 1; i < 10; i++) {
+    for (let i = 1; i < 50; i++) {
         pages.push(i);
     }
 
