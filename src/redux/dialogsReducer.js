@@ -1,5 +1,4 @@
 const ADD_MESSAGE = 'ADD_MESSAGE';
-const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT';
 
 let initialState = {
     dataUsers: [
@@ -13,9 +12,6 @@ let initialState = {
         {id: Math.floor(Math.random() * 1000000), message: 'Hi Daria'},
         {id: Math.floor(Math.random() * 1000000), message: 'Hi Alex'},
     ],
-    newMessageText: {
-        text: 'Write you message!'
-    },
 };
 
 export const dialogsReducer = (state = initialState, action) => {
@@ -24,38 +20,21 @@ export const dialogsReducer = (state = initialState, action) => {
         case ADD_MESSAGE: {
             let newMessage = {
                 id: Math.floor(Math.random() * 10000),
-                message: state.newMessageText.text,
+                message: action.newMessageBody,
             };
             return {
                 ...state,
                 dataMessages: [...state.dataMessages, newMessage],
-                newMessageText: {
-                    text: ' ',
-                }
             };
-        }
-        case UPDATE_MESSAGE_TEXT: {
-            return{
-                ...state,
-                newMessageText: {
-                    text: action.data,
-                }
-            }
         }
         default:
             return state;
     }
 };
 
-export const addMessageActionCreator = () => {
+export const addMessageActionCreator = (newMessageBody) => {
     return {
         type: ADD_MESSAGE,
-    }
-};
-
-export const updateMessageTextActionCreator = (text) => {
-    return {
-        type: UPDATE_MESSAGE_TEXT,
-        data: text,
+        newMessageBody: newMessageBody,
     }
 };

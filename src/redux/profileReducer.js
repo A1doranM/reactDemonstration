@@ -1,7 +1,6 @@
 import {profileAPI} from "../components/API/API";
 
 const ADD_POST = 'ADD_POST';
-const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
 
@@ -12,9 +11,6 @@ let initialState = {
         {id: Math.floor(Math.random() * 1000000), text: 'Third post'},
         {id: Math.floor(Math.random() * 1000000), text: 'Fourth post'},
     ],
-    newPostText: {
-        text: 'Write you post!'
-    },
     profile: null,
     status: '',
 };
@@ -25,7 +21,7 @@ export const profileReducer = (state = initialState, action) => {
         case ADD_POST: {
             let newPost = {
                 id: 5,
-                text: state.newPostText.text,
+                text: action.newPostBody,
             };
             return {
                 ...state,
@@ -33,14 +29,6 @@ export const profileReducer = (state = initialState, action) => {
                 newPostText: {
                     text: '',
                 }
-            };
-        }
-        case UPDATE_POST_TEXT: {
-            return {
-                ...state,
-                newPostText: {
-                    text: action.data,
-                },
             };
         }
         case SET_USER_PROFILE: {
@@ -60,16 +48,10 @@ export const profileReducer = (state = initialState, action) => {
     }
 };
 
-export const addPostActionCreator = () => {
+export const addPostActionCreator = (newPostBody) => {
     return {
         type: ADD_POST,
-    }
-};
-
-export const updatePostTextActionCreator = (text) => {
-    return {
-        type: UPDATE_POST_TEXT,
-        data: text,
+        newPostBody: newPostBody,
     }
 };
 

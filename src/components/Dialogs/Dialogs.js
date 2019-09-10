@@ -4,6 +4,7 @@ import styleFor from './Dialogs.module.css';
 import Dialog from "./Dialog/Dialog";
 import Message from "./Messages/Message";
 import {Redirect} from "react-router-dom";
+import AddMessageFormRedux from "./DialogForm/AddMessageForm";
 
 const Dialogs = (props) => {
     let dialogElems = props.dialogsPage.dataUsers.map((dialog) => {
@@ -14,13 +15,8 @@ const Dialogs = (props) => {
         return <Message key={message.id} message={message.message}/>
     });
 
-    let newMessage = () => {
-        props.newMessage();
-    };
-
-    let changeMessageText = (e) =>{
-        let text = e.target.value;
-        props.changeMessageText(text);
+    let addNewMessage = (values) => {
+        props.newMessage(values.newMessageBody);
     };
 
     if(!props.isAuth){
@@ -33,15 +29,7 @@ const Dialogs = (props) => {
                 {dialogElems}
             </div>
             <div className={styleFor.messages}>
-                <div>
-                    <textarea onChange={changeMessageText}
-                              value={props.dialogsPage.newMessageText.text}/>
-
-                    <button onClick={newMessage}>
-                        send
-                    </button>
-
-                </div>
+                <AddMessageFormRedux onSubmit={addNewMessage} />
                 <div>
                     {messagesElems}
                 </div>
