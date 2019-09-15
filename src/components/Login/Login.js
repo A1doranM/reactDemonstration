@@ -3,6 +3,7 @@ import {Field, reduxForm} from "redux-form";
 import {Input} from "../common/FormsControls/FormsControls";
 import {requiredField} from "../../utils/validators/validators";
 import {Redirect} from "react-router-dom";
+import styleFor from '../common/FormsControls/FormControll.module.css';
 
 let LoginForm = (props) => {
     return (
@@ -27,6 +28,9 @@ let LoginForm = (props) => {
                        validate={[requiredField]}/>
                 remember me
             </div>
+            {props.error && <div className={styleFor.form_summary_error}>
+                {props.error}
+            </div>}
             <div>
                 <button>Log In</button>
             </div>

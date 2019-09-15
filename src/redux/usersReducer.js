@@ -128,12 +128,13 @@ export const followingInProgressActionCreator = (fetchingValue, userID) => {
     }
 };
 
-export const getUsersThunkCreator = (currentPage, pageSize) => {
+export const getUsersThunkCreator = (page, pageSize) => {
     return (dispatch) => {
 
         dispatch(setFetchingActionCreator(true));
+        dispatch(setCurrentPageActionCreator(page));
 
-        usersAPI.getUsers(currentPage, pageSize)
+        usersAPI.getUsers(page, pageSize)
             .then(data => {
                 dispatch(setUsersActionCreator(data.items));
                 dispatch(setUsersTotalCountActionCreator(data.totalCount));

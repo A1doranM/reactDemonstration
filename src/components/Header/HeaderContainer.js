@@ -26,10 +26,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getAuthUserData: () => {
-            dispatch(getAuthUserDataThunkCreator);
+            dispatch(getAuthUserDataThunkCreator());
         },
         logout: () => {
-            dispatch(logoutThunkCreator);
+            dispatch(logoutThunkCreator());
         },
     }
 };

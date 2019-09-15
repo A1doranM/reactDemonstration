@@ -16,7 +16,7 @@ let mapDispatchToProps = (dispatch) => {
             dispatch(loginThunkCreator(email, password, rememberMe));
         },
         logout: () => {
-            dispatch(logoutThunkCreator)
+            dispatch(logoutThunkCreator())
         }
     }
 
