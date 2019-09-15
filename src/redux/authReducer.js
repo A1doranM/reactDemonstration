@@ -17,7 +17,6 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true,
             };
         case SET_FETCHING:
             return {
@@ -29,13 +28,14 @@ export const authReducer = (state = initialState, action) => {
     }
 };
 
-export const setUserDataActionCreator = (userID, email, login) => {
+export const setUserDataActionCreator = (userID, email, login, isAuth) => {
     return {
         type: SET_USER_DATA,
         data: {
             userID: userID,
             email: email,
-            login: login
+            login: login,
+            isAuth: isAuth
         },
     }
 };
@@ -47,14 +47,30 @@ export const setFetchingActionCreator = (fetchingValue) => {
     }
 };
 
-export const getAuthUserDataThunkCreator = () => {
-    return (dispatch) => {
-        authAPI.me()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    let {id, email, login} = response.data.data;
-                    dispatch(setUserDataActionCreator(id, email, login));
-                }
-            });
-    }
+export const getAuthUserDataThunkCreator = () => (dispatch) => {
+    authAPI.me()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                let {id, email, login} = response.data.data;
+                dispatch(setUserDataActionCreator(id, email, login, true));
+            }
+        });
+};
+
+export const loginThunkCreator = (email, password, rememberMe) => (dispatch) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserDataThunkCreator());
+            }
+        });
+};
+
+export const logoutThunkCreator  = () => (dispatch) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setUserDataActionCreator(null, null, null, false));
+            }
+        });
 };
