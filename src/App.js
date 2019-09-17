@@ -12,7 +12,7 @@ import LoginContainer from "./components/Login/LoginContainer";
 import {logoutThunkCreator} from "./redux/authReducer";
 import {connect} from 'react-redux';
 import {compose} from "redux";
-import {setInitialize, setInitializeSuccessThunkCreator} from "./redux/appReducer";
+import {setInitializeSuccessThunkCreator} from "./redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
 
 class App extends React.Component {
