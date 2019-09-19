@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const StatusWithHooks = (props) => {
+const Status = (props) => {
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status);
 
@@ -36,4 +36,4 @@ const StatusWithHooks = (props) => {
     )
 };
 
-export default StatusWithHooks;
+export default Status;
