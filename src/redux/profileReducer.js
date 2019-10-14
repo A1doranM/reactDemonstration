@@ -38,7 +38,7 @@ export const profileReducer = (state = initialState, action) => {
             }
         }
         case SET_USER_STATUS: {
-            return{
+            return {
                 ...state,
                 status: action.status,
             }
@@ -69,31 +69,19 @@ export const setUserStatusActionCreator = (status) => {
     }
 };
 
-export const getUserProfileThunkCreator = (userID) => {
-    return (dispatch) => {
-        profileAPI.getProfile(userID)
-            .then(response => {
-                dispatch(setUserProfileActionCreator(response.data));
-            });
-    };
+export const getUserProfileThunkCreator = (userID) => async (dispatch) => {
+    let response = await profileAPI.getProfile(userID);
+    dispatch(setUserProfileActionCreator(response.data));
 };
 
-export const getUserStatusThunkCreator = (userID) => {
-    return (dispatch) => {
-        profileAPI.getStatus(userID)
-            .then(response => {
-                dispatch(setUserStatusActionCreator(response.data));
-            });
-    };
+export const getUserStatusThunkCreator = (userID) => async (dispatch) => {
+    let response = await profileAPI.getStatus(userID);
+    dispatch(setUserStatusActionCreator(response.data));
 };
 
-export const updateUserStatusThunkCreator = (status) => {
-    return (dispatch) => {
-        profileAPI.updateStatus(status)
-            .then(response => {
-                if(response.data.resultCode === 0) {
-                    dispatch(setUserStatusActionCreator(response.data));
-                }
-            });
-    };
+export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
+    let response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setUserStatusActionCreator(response.data));
+    }
 };

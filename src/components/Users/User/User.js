@@ -1,38 +1,38 @@
 import React from 'react';
 import styleFor from "../User.module.css";
+import {NavLink} from "react-router-dom";
 
-let User = (props) =>{
-
-    // let follow = () =>{
-    //     props.follow(props.id);
-    // };
-    //
-    // let unfollow = () =>{
-    //     props.unfollow(props.id);
-    // };
-
-    return(
-        <div key={props.user.id}>
+let User = ({user, followingInProgress, unfollow, follow}) => {
+    return (
+        <div key={user.id}>
+            <span>
+                <div>
+                    <NavLink to={'/profile/' + user.id} activeClassName={styleFor.active}>
+                        <img src={user.photos.large} className={styleFor.userPhoto} alt=''/>
+                    </NavLink>
+                </div>
+                <div>
+                    {user.followed ? <button disabled={followingInProgress.some(id => id === user.id)}
+                                             onClick={() => {
+                                                 unfollow(user.id);
+                                             }}>Unfollow</button>
+                        : <button disabled={followingInProgress.some(id => id === user.id)}
+                                  onClick={() => {
+                                      follow(user.id);
+                                  }}>Follow</button>
+                    }
+                    </div>
+            </span>
+            <span>
                 <span>
-                    <div>
-                        <img src={props.user.photo} className={styleFor.userPhoto} alt=''/>
-                    </div>
-                    <div>
-                        {props.user.followed
-                            ? <button onClick={() => {props.follow(props.user.id)}}>Unfollow</button>
-                            : <button onClick={() => {props.unfollow(props.user.id)}}>Follow</button>}
-                    </div>
+                    <div>{user.name}</div>
+                    <div>{user.status}</div>
                 </span>
                 <span>
-                    <span>
-                        <div>{props.user.name}</div>
-                        <div>{props.user.status}</div>
-                    </span>
-                    <span>
-                        <div>{props.user.location.city}</div>
-                        <div>{props.user.location.country}</div>
-                    </span>
+                    <div>{'user.location.city'}</div>
+                    <div>{'user.location.country'}</div>
                 </span>
+            </span>
         </div>
     )
 };

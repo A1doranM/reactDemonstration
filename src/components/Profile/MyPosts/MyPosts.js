@@ -4,10 +4,9 @@ import styleFor from './MyPosts.module.css';
 import Post from '../MyPosts/Post/Post';
 import AddPostFormRedux from "../PostForm/AddPostForm";
 
-const MyPosts = (props) => {
-
+let MyPosts = React.memo((props) => {
     let addPost = (values) => {
-        props.addPost(values.newPostBody);
+        this.props.addPost(values.newPostBody);
     };
 
     let postsElems = props.posts.map((post) => {
@@ -22,6 +21,6 @@ const MyPosts = (props) => {
             </div>
         </div>
     )
-};
+});
 
 export default MyPosts;

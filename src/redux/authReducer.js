@@ -1,5 +1,6 @@
 import {authAPI} from "../components/API/API";
 import {stopSubmit} from 'redux-form';
+
 const SET_USER_DATA = 'SET_USER_DATA';
 const SET_FETCHING = 'SET_FETCHING';
 
@@ -47,38 +48,34 @@ export const setFetchingActionCreator = (fetchingValue) => {
     }
 };
 
-export const getAuthUserDataThunkCreator = () => (dispatch) => {
-    return authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                let {id, email, login} = response.data.data;
-                dispatch(setUserDataActionCreator(id, email, login, true));
-            }
-        });
+export const getAuthUserDataThunkCreator = () => async (dispatch) => {
+    let response = await authAPI.me();
+
+    if (response.data.resultCode === 0) {
+        let {id, email, login} = response.data.data;
+        dispatch(setUserDataActionCreator(id, email, login, true));
+    }
 };
 
-export const loginThunkCreator = (email, password, rememberMe) => (dispatch) => {
-    authAPI.login(email, password, rememberMe)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserDataThunkCreator());
-            } else {
-                if (response.data.messages.length > 0) {
-                    let message = response.data.messages[0];
-                    dispatch(stopSubmit('login', {_error: message}));
-                } else {
-                    dispatch(stopSubmit('login', {_error: 'Some error'}));
-                }
-            }
-        });
+export const loginThunkCreator = (email, password, rememberMe) => async (dispatch) => {
+    let response = await authAPI.login(email, password, rememberMe);
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserDataThunkCreator());
+    } else {
+        if (response.data.messages.length > 0) {
+            let message = response.data.messages[0];
+            dispatch(stopSubmit('login', {_error: message}));
+        } else {
+            dispatch(stopSubmit('login', {_error: 'Some error'}));
+        }
+    }
 };
 
-export const logoutThunkCreator  = () => (dispatch) => {
-    authAPI.logout()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                alert('logout');
-                dispatch(setUserDataActionCreator(null, null, null, false));
-            }
-        });
+export const logoutThunkCreator = () => async (dispatch) => {
+    let response = await authAPI.logout();
+
+    if (response.data.resultCode === 0) {
+        dispatch(setUserDataActionCreator(null, null, null, false));
+    }
+
 };
