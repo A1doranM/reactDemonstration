@@ -63,6 +63,7 @@ export const setUserProfileActionCreator = (profile) => {
 };
 
 export const setUserStatusActionCreator = (status) => {
+    console.log("ACTION CREATOR", status);
     return {
         type: SET_USER_STATUS,
         status: status,
@@ -80,8 +81,8 @@ export const getUserStatusThunkCreator = (userID) => async (dispatch) => {
 };
 
 export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
-    let response = await profileAPI.updateStatus(status)
+    let response = await profileAPI.updateStatus(status);
     if (response.data.resultCode === 0) {
-        dispatch(setUserStatusActionCreator(response.data));
+        dispatch(setUserStatusActionCreator(status));
     }
 };
