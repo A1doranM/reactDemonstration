@@ -1,6 +1,7 @@
 import React from 'react';
 import styleFor from "../User.module.css";
 import {NavLink} from "react-router-dom";
+import userPhoto from "../../../assets/images/download.png";
 
 let User = ({user, followingInProgress, unfollow, follow}) => {
     return (
@@ -8,7 +9,7 @@ let User = ({user, followingInProgress, unfollow, follow}) => {
             <span>
                 <div>
                     <NavLink to={'/profile/' + user.id} activeClassName={styleFor.active}>
-                        <img src={user.photos.large} className={styleFor.userPhoto} alt=''/>
+                        <img src={user.photos.small != null ? user.photos.small : userPhoto} className={styleFor.userPhoto} alt=''/>
                     </NavLink>
                 </div>
                 <div>

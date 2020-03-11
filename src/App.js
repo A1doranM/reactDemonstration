@@ -1,16 +1,16 @@
 import React from 'react';
-import {Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Route, withRouter} from "react-router-dom";
 
 import './App.css';
 
-import {logoutThunkCreator} from "./redux/authReducer";
-import {connect} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import {compose} from "redux";
 import {setInitializeSuccessThunkCreator} from "./redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
 
 import Navigation from './components/Navigation/Navigation';
 import HeaderContainer from "./components/Header/HeaderContainer";
+import store from "./redux/redux_store";
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
@@ -33,7 +33,7 @@ class App extends React.Component {
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs' render={() => {
                         return (
-                            <React.Suspense  fallback={<div>Loading...</div>}>
+                            <React.Suspense  fallback={<Preloader/>}>
                                 <DialogsContainer/>
                             </React.Suspense>
                         )
@@ -41,7 +41,7 @@ class App extends React.Component {
                     }/>
                     <Route path='/profile/:userID?' render={() => {
                         return (
-                            <React.Suspense  fallback={<div>Loading...</div>}>
+                            <React.Suspense  fallback={<Preloader/>}>
                                 <ProfileContainer/>
                             </React.Suspense>
                         )
@@ -49,7 +49,7 @@ class App extends React.Component {
                     }/>
                     <Route path='/users' render={() => {
                         return (
-                            <React.Suspense  fallback={<div>Loading...</div>}>
+                            <React.Suspense  fallback={<Preloader/>}>
                                 <UsersContainer/>
                             </React.Suspense>
                         )
@@ -57,7 +57,7 @@ class App extends React.Component {
                     }/>
                     <Route path='/login' render={() => {
                         return (
-                            <React.Suspense  fallback={<div>Loading...</div>}>
+                            <React.Suspense  fallback={<Preloader/>}>
                                 <LoginContainer/>
                             </React.Suspense>
                         )
@@ -81,13 +81,22 @@ const mapDispatchToProps = (dispatch) => {
         initializeApp: () => {
             dispatch(setInitializeSuccessThunkCreator())
         },
-        logout: () => {
-            dispatch(logoutThunkCreator());
-        },
     }
 };
 
-export default compose(
+let AppContainer = compose(
     withRouter,
     connect(mapStateToProps, mapDispatchToProps)
 )(App);
+
+let MainApp = (props) => {
+    return (
+        <BrowserRouter>
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>
+        </BrowserRouter>
+    )
+};
+
+export default MainApp;

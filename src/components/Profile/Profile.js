@@ -9,6 +9,9 @@ const Profile = (props) => {
         <div className={styleFor.content}>
             <ProfileInfo profile={props.profile}
                          status={props.status}
+                         isOwner={props.isOwner}
+                         savePhoto={props.savePhoto}
+                         saveProfile={props.saveProfile}
                          updateStatus={props.updateStatus}/>
             <MyPostsContainer/>
         </div>

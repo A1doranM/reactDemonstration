@@ -10,7 +10,7 @@ let LoginForm = ({handleSubmit, error}) => {
         <form onSubmit={handleSubmit}>
             {CreateField('Email', 'email', [requiredField], Input)}
             {CreateField('Password', 'password', [requiredField], Input, {type: 'password'})}
-            {CreateField(null, 'rememberMe', [requiredField], Input, {type: 'checkbox'}, 'Remember me')}
+            {CreateField(null, 'rememberMe', [], Input, {type: 'checkbox'}, 'Remember me')}
             {error && <div className={styleFor.form_summary_error}>
                 {error}
             </div>}

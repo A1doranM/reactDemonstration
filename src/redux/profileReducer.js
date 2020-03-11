@@ -1,8 +1,11 @@
 import {profileAPI} from "../components/API/API";
+import {stopSubmit} from "redux-form";
 
-const ADD_POST = 'ADD_POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_USER_STATUS = 'SET_USER_STATUS';
+const ADD_POST = "ADD_POST";
+const DELETE_POST = "DELETE_POST";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_USER_STATUS = '"SET_USER_STATUS"';
+const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
 let initialState = {
     postsData: [
@@ -13,6 +16,7 @@ let initialState = {
     ],
     profile: null,
     status: '',
+    photos: [],
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -31,6 +35,9 @@ export const profileReducer = (state = initialState, action) => {
                 }
             };
         }
+        case DELETE_POST:{
+
+        }
         case SET_USER_PROFILE: {
             return {
                 ...state,
@@ -41,6 +48,14 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 status: action.status,
+            }
+        }
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: {
+                    ...state, profile: {...state.profile, photos: action.photos}
+                }
             }
         }
         default:
@@ -55,6 +70,13 @@ export const addPostActionCreator = (newPostBody) => {
     }
 };
 
+export const deletePostActionCreator = (postId) => {
+    return {
+        type: DELETE_POST,
+        postId: postId,
+    }
+};
+
 export const setUserProfileActionCreator = (profile) => {
     return {
         type: SET_USER_PROFILE,
@@ -63,10 +85,16 @@ export const setUserProfileActionCreator = (profile) => {
 };
 
 export const setUserStatusActionCreator = (status) => {
-    console.log("ACTION CREATOR", status);
     return {
         type: SET_USER_STATUS,
         status: status,
+    }
+};
+
+export const savePhotoActionCreator = (photos) => {
+    return {
+        type: SAVE_PHOTO_SUCCESS,
+        photos: photos,
     }
 };
 
@@ -84,5 +112,23 @@ export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
     let response = await profileAPI.updateStatus(status);
     if (response.data.resultCode === 0) {
         dispatch(setUserStatusActionCreator(status));
+    }
+};
+
+// export const savePhoto = (file) => async (dispatch) => {
+//   let response = await profileAPI.savePhoto(file);
+//   if(response.data.resultCode === 0) {
+//       dispatch (savePhotoSuccess(response.data.data.photos));
+//   }
+// };
+
+export const saveProfileThunkCreator = (profile) => async (dispatch, getState) => {
+    const userId = getState().auth.userID;
+    const response = await profileAPI.saveProfile(profile);
+
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfileThunkCreator(userId));
+    } else {
+        dispatch(stopSubmit("login", {_error: response.data.messages[0]}));
     }
 };
