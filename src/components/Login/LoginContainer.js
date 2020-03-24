@@ -4,7 +4,8 @@ import Login from "./Login";
 
 let mapStateToProps = (state) => {
   return {
-      isAuth: state.auth.isAuth
+      isAuth: state.auth.isAuth,
+      captchaUrl: state.auth.captchaUrl,
   }
 };
 
