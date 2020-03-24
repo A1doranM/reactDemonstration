@@ -115,16 +115,12 @@ export const followingInProgressActionCreator = (fetchingValue, userID) => {
 };
 
 export const getUsersThunkCreator = (page, pageSize) => async (dispatch) => {
-
     dispatch(setFetchingActionCreator(true));
     dispatch(setCurrentPageActionCreator(page));
-
     let data = await usersAPI.getUsers(page, pageSize);
     dispatch(setUsersActionCreator(data.items));
     dispatch(setUsersTotalCountActionCreator(data.totalCount));
     dispatch(setFetchingActionCreator(false))
-
-
 };
 
 const FollowUnfollowFlow = async (dispatch, userID, apiMethod, actionCreator) => {

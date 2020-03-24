@@ -3,6 +3,7 @@ import styleFor from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "../Status/ProfileStatusWithHooks";
 import ProfileDataForm from "./ProfileDataForm";
+import userPhoto from "../../../assets/images/download.png";
 
 const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
     const [editMode, setEditMode] = useState(false);
@@ -22,14 +23,14 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, savePro
 
     const onMainPhotoSelected = (e) => {
         if (e.target.files.length) {
-            savePhoto(e.target.files[0])
+            savePhoto(e.target.files[0]);
         }
     };
 
     return (
         <div className={styleFor.profileInfo}>
             <div className={styleFor.description}>
-                <img src={profile.photos.small} alt={''}/>
+                <img src={profile.photos.large || userPhoto} className={styleFor.mainPhoto} alt={''}/>
                 {isOwner && <input type="file" onChange={onMainPhotoSelected}/>}
                 {editMode ?
                     <ProfileDataForm initialValues = {profile} profile={profile} onSubmit={onSubmit}/> :
@@ -64,7 +65,7 @@ const ProfileData = ({profile, isOwner, changeEditMode}) => {
                 <b>About me</b>: {profile.aboutMe}
             </div>
             <div>
-                <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
+                <b>Contacts</b>: {profile.contacts && Object.keys(profile.contacts).map(key => {
                 return (
                     <Contact
                         key={key}
