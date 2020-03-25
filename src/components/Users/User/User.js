@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import styleFor from "../User.module.css";
 import {NavLink} from "react-router-dom";
 import userPhoto from "../../../assets/images/download.png";
@@ -8,8 +8,8 @@ let User = ({user, followingInProgress, unfollow, follow}) => {
         <div key={user.id}>
             <span>
                 <div>
-                    <NavLink to={'/profile/' + user.id} activeClassName={styleFor.active}>
-                        <img src={user.photos.small != null ? user.photos.small : userPhoto} className={styleFor.userPhoto} alt=''/>
+                    <NavLink to={"/profile/" + user.id} activeClassName={styleFor.active}>
+                        <img src={user.photos.small != null ? user.photos.small : userPhoto} className={styleFor.userPhoto} alt=""/>
                     </NavLink>
                 </div>
                 <div>
@@ -30,8 +30,8 @@ let User = ({user, followingInProgress, unfollow, follow}) => {
                     <div>{user.status}</div>
                 </span>
                 <span>
-                    <div>{'user.location.city'}</div>
-                    <div>{'user.location.country'}</div>
+                    <div>{"user.location.city"}</div>
+                    <div>{"user.location.country"}</div>
                 </span>
             </span>
         </div>

@@ -26,14 +26,14 @@ class ProfileContainer extends React.Component {
         }
         this.props.getUserProfileThunkCreator(userID);
         this.props.getUserStatusThunkCreator(userID);
-    }
+    };
 
     componentDidMount() {
         this.refreshProfile();
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.match.params.userID !== prevProps.userID) {
+        if(this.props.match.params.userID !== prevProps.match.params.userID) {
             this.refreshProfile();
         }
     };
@@ -48,8 +48,8 @@ class ProfileContainer extends React.Component {
                      savePhoto={this.props.savePhotoThunkCreator}
                      saveProfile={this.props.saveProfileThunkCreator}
                      updateStatus={this.props.updateUserStatusThunkCreator}/>
-        )
-    }
+        );
+    };
 }
 
 let mapStateToProps = (state) => {
@@ -58,7 +58,7 @@ let mapStateToProps = (state) => {
         status: state.profilePage.status,
         authorizedUserID: state.auth.userID,
         isAuth: state.auth.isAuth,
-    }
+    };
 };
 
 export default compose(

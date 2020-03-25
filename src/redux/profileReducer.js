@@ -4,18 +4,18 @@ import {stopSubmit} from "redux-form";
 const ADD_POST = "ADD_POST";
 const DELETE_POST = "DELETE_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
-const SET_USER_STATUS = '"SET_USER_STATUS"';
+const SET_USER_STATUS = "SET_USER_STATUS";
 const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
 let initialState = {
     postsData: [
-        {id: Math.floor(Math.random() * 1000000), text: 'First post'},
-        {id: Math.floor(Math.random() * 1000000), text: 'Second post'},
-        {id: Math.floor(Math.random() * 1000000), text: 'Third post'},
-        {id: Math.floor(Math.random() * 1000000), text: 'Fourth post'},
+        {id: Math.floor(Math.random() * 1000000), text: "First post"},
+        {id: Math.floor(Math.random() * 1000000), text: "Second post"},
+        {id: Math.floor(Math.random() * 1000000), text: "Third post"},
+        {id: Math.floor(Math.random() * 1000000), text: "Fourth post"},
     ],
     profile: null,
-    status: '',
+    status: "",
     photos: [],
 };
 
@@ -31,7 +31,7 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 postsData: [...state.postsData, newPost],
                 newPostText: {
-                    text: '',
+                    text: "",
                 }
             };
         }
@@ -67,10 +67,10 @@ export const addPostActionCreator = (newPostBody) => {
     }
 };
 
-export const deletePostActionCreator = (postId) => {
+export const deletePostActionCreator = (postID) => {
     return {
         type: DELETE_POST,
-        postId: postId,
+        postID: postID,
     }
 };
 
@@ -106,9 +106,13 @@ export const getUserStatusThunkCreator = (userID) => async (dispatch) => {
 };
 
 export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
-    let response = await profileAPI.updateStatus(status);
-    if (response.data.resultCode === 0) {
-        dispatch(setUserStatusActionCreator(status));
+    try {
+        let response = await profileAPI.updateStatus(status);
+        if (response.data.resultCode === 0) {
+            dispatch(setUserStatusActionCreator(status));
+        }
+    } catch (e) {
+        console.error("ERROR PROFILE REDUCER: ", e);
     }
 };
 

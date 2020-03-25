@@ -4,7 +4,7 @@ const instance = axios.create({
     withCredentials: true,
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     headers: {
-        'API-KEY': '849246fb-1531-4da7-b81e-ddd60f9def36'
+        "API-KEY": "849246fb-1531-4da7-b81e-ddd60f9def36"
     },
 });
 
@@ -19,16 +19,16 @@ export const usersAPI = {
         return instance.delete(`follow/${userID}`)
             .then(response => {
                 return response.data;
-            })
+            });
     },
     userFollow(userID = 1) {
         return instance.post(`follow/${userID}`, null)
             .then(response => {
                 return response.data;
-            })
+            });
     },
     getProfile(userID){
-        console.warn('Deprecated. Use profileAPI.getProfile');
+        console.warn("Deprecated. Use profileAPI.getProfile");
         return profileAPI.getProfile(userID);
     },
 };
@@ -63,10 +63,10 @@ export const authAPI = {
         return instance.get(`auth/me`);
     },
     login(email, password, rememberMe = false, captcha = null) {
-        return instance.post('auth/login', {email, password, rememberMe, captcha});
+        return instance.post("auth/login", {email, password, rememberMe, captcha});
     },
     logout() {
-        return instance.delete('auth/login');
+        return instance.delete("auth/login");
     }
 };
 

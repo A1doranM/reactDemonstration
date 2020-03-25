@@ -1,6 +1,6 @@
-import React from 'react';
-import styleFor from './Paginator.module.css';
-import cn from 'classnames';
+import React from "react";
+import styleFor from "./Paginator.module.css";
+import cn from "classnames";
 
 let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize}) => {
     let pageCount = Math.ceil(totalItemsCount / pageSize);
@@ -12,7 +12,7 @@ let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portion
 
     let portionCount = Math.ceil(pageCount / portionSize);
     let [portionNumber, setPortionNumber] = React.useState(1);
-    let leftProtionPageNumber = (portionNumber - 1) * portionSize + 1;
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
 
     return (
@@ -23,7 +23,7 @@ let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portion
             }}>PREV</button>
             }
             {pages
-                .filter((page) => ((page >= leftProtionPageNumber) && (page <= rightPortionPageNumber)))
+                .filter((page) => ((page >= leftPortionPageNumber) && (page <= rightPortionPageNumber)))
                 .map((page) => {
                     return (
                         <span key={Math.floor(Math.random() * 1000000)}
