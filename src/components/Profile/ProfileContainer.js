@@ -16,6 +16,7 @@ import {compose} from "redux";
 class ProfileContainer extends React.Component {
 
     refreshProfile() {
+        console.log("PROPS PASSED TO USER: ", this.props);
         let userID = this.props.match.params.userID;
         if (!userID) {
             if (this.props.isAuth) {
@@ -33,7 +34,7 @@ class ProfileContainer extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.match.params.userID !== prevProps.match.params.userID) {
+        if (this.props.match.params.userID !== prevProps.match.params.userID) {
             this.refreshProfile();
         }
     };

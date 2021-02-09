@@ -1,7 +1,7 @@
 import {createSelector} from "reselect";
 
 const getUsers = (state) => {
-    return state.usersPage.usersData
+    return state.usersPage.users
 };
 
 export const getPortionSize = (state) => {
