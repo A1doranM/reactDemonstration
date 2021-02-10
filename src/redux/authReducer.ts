@@ -1,4 +1,4 @@
-import {authAPI, securityAPI} from "../components/API/API";
+import {authAPI, ResultCodesEnum, ResultCodesEnumWithCaptcha, securityAPI} from "../components/API/API";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = "SET_USER_DATA";
@@ -75,8 +75,8 @@ export const setUserDataActionCreator = (userID: number | null,
 export const getAuthUserDataThunkCreator = () => async (dispatch: any) => {
     let response = await authAPI.me();
 
-    if (response.data.resultCode === 0) {
-        let {id, email, login} = response.data.data;
+    if (response.resultCode === 0) {
+        let {id, email, login} = response.data;
         dispatch(setUserDataActionCreator(id, email, login, true));
     }
 };
@@ -86,14 +86,14 @@ export const loginThunkCreator = (email: string,
                                   rememberMe: boolean,
                                   captchaUrl: string) => async (dispatch: any) => {
     let response = await authAPI.login(email, password, rememberMe, captchaUrl);
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.SUCCESS) {
         dispatch(getAuthUserDataThunkCreator());
     } else {
-        if (response.data.messages.length > 0) {
-            let message = response.data.messages[0];
+        if (response.messages.length > 0) {
+            let message = response.messages[0];
             dispatch(stopSubmit("login", {_error: message}));
         } else {
-            if (response.data.resultCode === 10) {
+            if (response.resultCode === ResultCodesEnumWithCaptcha.CAPTCHA_REQUIRED) {
                 dispatch(getCaptchaUrlThunkCreator());
             }
             dispatch(stopSubmit("login", {_error: "Some error"}));
@@ -104,7 +104,7 @@ export const loginThunkCreator = (email: string,
 export const logoutThunkCreator = () => async (dispatch: any) => {
     let response = await authAPI.logout();
 
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === ResultCodesEnum.SUCCESS) {
         dispatch(setUserDataActionCreator(null, null, null, false));
     }
 

@@ -1,4 +1,5 @@
-import * as axios from "axios/index";
+import axios from "axios";
+import {ProfileType} from "../../types/types";
 
 const instance = axios.create({
     withCredentials: true,
@@ -15,7 +16,7 @@ export const usersAPI = {
                 return response.data;
             });
     },
-    userUnfollow(userID) {
+    userUnfollow(userID: number) {
         return instance.delete(`follow/${userID}`)
             .then(response => {
                 return response.data;
@@ -27,23 +28,23 @@ export const usersAPI = {
                 return response.data;
             });
     },
-    getProfile(userID){
+    getProfile(userID: number) {
         console.warn("Deprecated. Use profileAPI.getProfile");
         return profileAPI.getProfile(userID);
     },
 };
 
 export const profileAPI = {
-    getProfile(userID){
+    getProfile(userID: number) {
         return instance.get(`profile/` + userID);
     },
-    getStatus(userID){
+    getStatus(userID: number) {
         return instance.get(`profile/status/` + userID);
     },
-    updateStatus(status){
+    updateStatus(status: string) {
         return instance.put(`profile/status/`, {status: status});
     },
-    savePhoto(photoFile) {
+    savePhoto(photoFile: any) {
         const formData = new FormData();
         formData.append("image", photoFile);
 
@@ -53,17 +54,49 @@ export const profileAPI = {
             }
         });
     },
-    saveProfile(profile) {
+    saveProfile(profile: ProfileType) {
         return instance.put(`profile`, profile);
+    }
+};
+
+export enum ResultCodesEnum {
+    SUCCESS = 0,
+    ERROR = 1,
+}
+
+export enum ResultCodesEnumWithCaptcha {
+    CAPTCHA_REQUIRED = 10,
+}
+
+type MeResponseType = {
+    data: {
+        id: number,
+        email: string,
+        login: string,
+    },
+    resultCode: ResultCodesEnum,
+    messages: Array<string>,
+};
+
+type LoginResponseType = {
+    resultCode: ResultCodesEnum | ResultCodesEnumWithCaptcha,
+    messages: Array<string>,
+    data: {
+        userID: number
     }
 };
 
 export const authAPI = {
     me() {
-        return instance.get(`auth/me`);
+        return instance.get<MeResponseType>(`auth/me`).then(res => res.data);
     },
-    login(email, password, rememberMe = false, captcha = null) {
-        return instance.post("auth/login", {email, password, rememberMe, captcha});
+    login(email: string, password: string, rememberMe = false, captcha: null | string = null) {
+        return instance.post<LoginResponseType>("auth/login", {
+            email,
+            password,
+            rememberMe,
+            captcha
+        }).then(res => res.data);
     },
     logout() {
         return instance.delete("auth/login");
