@@ -15,7 +15,7 @@ import store from "./redux/redux_store";
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
-const LoginContainer = React.lazy(() => import("./components/Login/LoginContainer"));
+const Login = React.lazy(() => import("./components/Login/Login"));
 
 class App extends React.Component {
     catchAllUnhandledErrors = (promiseRejectionEvent) => {
@@ -76,7 +76,7 @@ class App extends React.Component {
                         <Route path="/login" render={() => {
                             return (
                                 <React.Suspense fallback={<Preloader/>}>
-                                    <LoginContainer/>
+                                    <Login/>
                                 </React.Suspense>
                             )
                         }
